@@ -191,3 +191,18 @@ clearCart();
     cartLists = [];
     reloadCart();
 }
+ In script.js, add the following code:
+function calculateChanges() {
+  const subtotal = parseFloat($(".subtotal").text().replace("$", ""));
+  const tax = parseFloat($(".tax").text().replace("$", ""));
+  const total = subtotal + tax;
+  const cashTendered = parseFloat($("#cash-tendered").val());
+  
+  if (cashTendered >= total) {
+    const changes = cashTendered - total;
+    $(".changes").text(`$${changes.toFixed(2)}`);
+  } else {
+    $(".changes").text("Insufficient payment");
+  }
+}
+
