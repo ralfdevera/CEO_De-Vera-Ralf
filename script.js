@@ -112,77 +112,6 @@ function changeQuantity(key, quantity) {
     }
     reloadCart();
 }
-
-function clearCart() {
-    // Get the subtotal, tax and total elements
-const subtotalElement = document.querySelector('.subtotal');
-const taxElement = document.querySelector('.tax');
-const totalElement = document.querySelector('.total');
-const cartListElement = document.querySelector('.cart-list');
-
-// Get the cart items
-const cartItems = [];
-
-// Function to update the subtotal, tax and total when an item is added or removed
-function updateTotal() {
-    let subtotal = 0;
-    let tax = 0;
-
-    // Calculate the subtotal
-    cartItems.forEach((item) => {
-        subtotal += item.price * item.quantity;
-    });
-
-    // Calculate the tax
-    tax = subtotal * 0.12;
-
-    // Update the subtotal, tax and total elements
-    subtotalElement.textContent = `Rs. ${subtotal.toFixed(2)}`;
-    taxElement.textContent = `Rs. ${tax.toFixed(2)}`;
-    totalElement.textContent = `Rs. ${subtotal + tax.toFixed(2)}`;
-}
-
-// Function to add an item to the cart
-function addItem(item) {
-    const existingItemIndex = cartItems.findIndex((cartItem) => cartItem.id === item.id);
-
-    if (existingItemIndex !== -1) {
-        cartItems[existingItemIndex].quantity++;
-    } else {
-        cartItems.push({ id: item.id, price: item.price, quantity: 1 });
-    }
-
-    updateTotal();
-
-    // Add the item to the cart list
-    const listItem = document.createElement('li');
-    listItem.textContent = `${item.name} x ${item.quantity}`;
-    cartListElement.appendChild(listItem);
-}
-
-// Function to remove an item from the cart
-function removeItem(id) {
-    const index = cartItems.findIndex((cartItem) => cartItem.id === id);
-    if (index !== -1) {
-        cartItems.splice(index, 1);
-        updateTotal();
-        // Remove the item from the cart list
-        const listItem = document.querySelector(`li[data-item-id="${id}"]`);
-        if (listItem) {
-            listItem.remove();
-        }
-    }
-}
-
-// Function to clear the cart
-function clearCart() {
-    cartItems.length = 0;
-    updateTotal();
-    // Clear the cart list
-    cartListElement.innerHTML = '';
-}
-
-// Example usage:
 document.addEventListener('DOMContentLoaded', (event) => {
     const prices = {
         price1: 10000.00,
@@ -239,3 +168,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
     cashInput.addEventListener('input', calculateChange);
 });
+                
