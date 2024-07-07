@@ -131,3 +131,15 @@ function calculateChanges() {
 function clearCart() {
   $(".cart-list").empty();
 }
+function calculateChanges() {
+  var cashTendered = parseFloat($("#cashTendered").val());
+  var total = parseFloat($(".total").text().replace("$", ""));
+  
+  var changes = cashTendered - total;
+  
+  if (changes >= 0) {
+      $(".changes").text("$" + changes.toFixed(2));
+  } else {
+      alert("Insufficient cash tendered");
+  }
+}
