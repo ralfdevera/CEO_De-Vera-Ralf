@@ -1,10 +1,11 @@
+<!-- script.js -->
 let itemList =  document.querySelector('.items');
 let cart = document.querySelector('.cart');
 let cartList = document.querySelector('.cart-list');
 let total = document.querySelector('.total');
 let tax = document.querySelector('.tax');
 let subtotal = document.querySelector('.subtotal');
-
+let changes = document.querySelector('.changes');
 
 let items = [
     {
@@ -77,7 +78,7 @@ function reloadCart() {
     cartList.innerHTML = '';
     let totalPrice = 0;
     cartLists.forEach((value, key) => {
-        totalPrice = totalPrice + value.price;
+        totalPrice = totalPrice + value.price * value.quantity;
 
         if (value != null) {
             let listItem = document.createElement('li');
@@ -85,11 +86,11 @@ function reloadCart() {
             listItem.innerHTML = `
                 <div><img src="${value.image}" style="width: 80px"/></div>
                 <div><h5 class="mt-1">${value.name}</h5></div>
-                <div><h6 class="mt-2">${value.price.toLocaleString()}</h6></div>
+                <div><h6 class="mt-2">${(value.price * value.quantity).toLocaleString()}</h6></div>
                 <div>
-                    <button onclick="changeQuantity(${key}, ${value.quantity - 1})">-</button>
-                    <div class="count m-2">${value.quantity}</div>
-                    <button onclick="changeQuantity(${key}, ${value.quantity + 1})">+</button>
+                    <button onclick='changeQuantity(${key}, ${value.quantity - 1})'>-</button>
+                    <div class='count m-2'>${value.quantity}</div>
+                    <button onclick='changeQuantity(${key}, ${value.quantity + 1})'>+</button>
                 </div>`;
             cartList.appendChild(listItem);
         }
@@ -100,7 +101,6 @@ function reloadCart() {
     tax.innerText = (totalPrice * 0.12).toLocaleString(); // Assuming 12% tax
     total.innerText = (totalPrice + parseFloat(tax.innerText)).toLocaleString();
 
-    quantity.innerText = count;
 }
 
 function changeQuantity(key, quantity) {
@@ -112,91 +112,22 @@ function changeQuantity(key, quantity) {
     }
     reloadCart();
 }
-document.addEventListener('DOMContentLoaded', (event) => {
-    const prices = {
-        price1: 10000.00,
-        price2: 5000.00,
-        price3: 27000.00,
-        price4: 37000.00,
-        price5: 80000.00,
-        price6: 90000.00,
-        price7: 100000.00
-    };
-
-    const qtyInputs = [
-        document.getElementById('qty1'),
-        document.getElementById('qty2'),
-        document.getElementById('qty3'),
-        document.getElementById('qty4'),
-        document.getElementById('qty5'),
-        document.getElementById('qty6'),
-        document.getElementById('qty7')
-    ];
-
-    const totalInput = document.getElementById('total');
-    const cashInput = document.getElementById('cash');
-    const changeInput = document.getElementById('change');
-    const cartsTextarea = document.getElementById('carts');
-
-    function updateCart() {
-        let total = 0;
-        let cartText = '';
-
-        qtyInputs.forEach((input, index) => {
-            const qty = parseInt(input.value) || 0;
-            const priceKey = `price${index + 1}`;
-            const productPrice = prices[priceKey];
-            if (qty > 0) {
-                total += qty * productPrice;
-                cartText += `Product ${index + 1} - Quantity: ${qty}, Price: ${(qty * productPrice).toFixed(2)}\n`;
-            }
-        });
-
-        totalInput.value = total.toFixed(2);
-        cartsTextarea.value = cartText.trim();
-    }
-
-    function calculateChange() {
-        const total = parseFloat(totalInput.value) || 0;
-        const cash = parseFloat(cashInput.value) || 0;
-        const change = cash - total;
-        changeInput.value = change.toFixed(2);
-    }
-
-    qtyInputs.forEach(input => {
-        input.addEventListener('input', updateCart);
-    });
-    cashInput.addEventListener('input', calculateChange);
-});
-  <!-- Script JS -->
-    <script src="./script.js"></script>
-</body>
-</html>
-
-<!-- script.js -->
-// Get the total cost of the items in the cart
-var totalCost = 0;
-$(".cart-list li").each(function() {
-  var price = parseFloat($(this).text().replace("$", ""));
-  totalCost += price;
-});
 
 // Function to calculate the changes
 function calculateChanges() {
   var cashTendered = parseFloat($("#cashTendered").val());
-  var total = totalCost + (totalCost * 0.12); // Add tax
+  var total = parseFloat($(".total").text().replace("$", ""));
+  
   var changes = cashTendered - total;
   
   if (changes >= 0) {
-    $(".changes").text("$" + changes.toFixed(2));
+      $(".changes").text("$" + changes.toFixed(2));
   } else {
-    alert("Insufficient cash tendered");
+      alert("Insufficient cash tendered");
   }
 }
 
 // Function to clear the cart
 function clearCart() {
   $(".cart-list").empty();
-  totalCost = 0;
 }
-                
