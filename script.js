@@ -168,4 +168,35 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
     cashInput.addEventListener('input', calculateChange);
 });
+  <!-- Script JS -->
+    <script src="./script.js"></script>
+</body>
+</html>
+
+<!-- script.js -->
+// Get the total cost of the items in the cart
+var totalCost = 0;
+$(".cart-list li").each(function() {
+  var price = parseFloat($(this).text().replace("$", ""));
+  totalCost += price;
+});
+
+// Function to calculate the changes
+function calculateChanges() {
+  var cashTendered = parseFloat($("#cashTendered").val());
+  var total = totalCost + (totalCost * 0.12); // Add tax
+  var changes = cashTendered - total;
+  
+  if (changes >= 0) {
+    $(".changes").text("$" + changes.toFixed(2));
+  } else {
+    alert("Insufficient cash tendered");
+  }
+}
+
+// Function to clear the cart
+function clearCart() {
+  $(".cart-list").empty();
+  totalCost = 0;
+}
                 
