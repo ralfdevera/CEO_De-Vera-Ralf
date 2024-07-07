@@ -143,3 +143,16 @@ function calculateChanges() {
       alert("Insufficient cash tendered");
   }
 }
+function checkout() {
+  // Code to process the checkout
+  calculateChanges();
+  // Clear the cart
+  clearCart();
+  alert("Thank you for your purchase!");
+}
+
+// Function to clear the cart
+function clearCart() {
+  cartList.innerHTML = '';
+  cartLists = [];
+}
