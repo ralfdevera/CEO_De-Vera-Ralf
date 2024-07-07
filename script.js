@@ -156,3 +156,24 @@ function clearCart() {
   cartList.innerHTML = '';
   cartLists = [];
 }
+function checkout() {
+  // Calculate the total
+  var total = parseFloat($(".total").text().replace("₱", ""));
+  
+  // Calculate the cash tendered
+  var cashTendered = parseFloat($("#cashTendered").val());
+  
+  // Calculate the changes
+  var changes = cashTendered - total;
+  
+  if (changes >= 0) {
+      $(".changes").text("₱" + changes.toFixed(2));
+  } else {
+      alert("Insufficient cash tendered");
+  }
+  
+  // Clear the cart
+  clearCart();
+  
+  alert("Thank you for your purchase!");
+}
