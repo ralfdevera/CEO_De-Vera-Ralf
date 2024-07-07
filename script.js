@@ -116,12 +116,12 @@ function changeQuantity(key, quantity) {
 // Function to calculate the changes
 function calculateChanges() {
   var cashTendered = parseFloat($("#cashTendered").val());
-  var total = parseFloat($(".total").text().replace("$", ""));
+  var total = parseFloat($(".total").text().replace("₱", ""));
   
   var changes = cashTendered - total;
   
   if (changes >= 0) {
-      $(".changes").text("$" + changes.toFixed(2));
+      $(".changes").text("₱" + changes.toFixed(2));
   } else {
       alert("Insufficient cash tendered");
   }
@@ -133,12 +133,12 @@ function clearCart() {
 }
 function calculateChanges() {
   var cashTendered = parseFloat($("#cashTendered").val());
-  var total = parseFloat($(".total").text().replace("$", ""));
+  var total = parseFloat($(".total").text().replace("₱", ""));
   
   var changes = cashTendered - total;
   
   if (changes >= 0) {
-      $(".changes").text("$" + changes.toFixed(2));
+      $(".changes").text("₱" + changes.toFixed(2));
   } else {
       alert("Insufficient cash tendered");
   }
